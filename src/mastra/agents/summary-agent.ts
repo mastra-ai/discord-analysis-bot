@@ -36,7 +36,7 @@ export const SummarySchema = z.object({
 });
 
 export const summaryAgent = new Agent({
-  name: 'Summary Agent',
+  name: "Summary Agent",
   instructions: `You are a specialized agent for analyzing daily Discord channel analyses and creating comprehensive weekly summaries.
   Your task is to review the daily analyses and identify significant patterns, trends, and recurring issues.
 
@@ -74,5 +74,5 @@ export const summaryAgent = new Agent({
 
   IMPORTANT: Base your analysis on the actual messages and data provided. Do not make assumptions or generate fake examples.
   Focus on extracting meaningful insights that can drive product improvements.`,
-  model: openai('gpt-4o'),
+  model: openai("gpt-4o"),
 });

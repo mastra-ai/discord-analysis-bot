@@ -76,30 +76,38 @@ function formatAnalysis(analysis: any): string {
 }
 
 async function runAnalysis(channelName: string, channelId: string) {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const outputFile = path.join('analysis_output', `${channelName}_analysis_${timestamp}.txt`);
-  let output = '🤖 Discord Analysis Bot\n------------------------\n';
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const outputFile = path.join(
+    "analysis_output",
+    `${channelName}_analysis_${timestamp}.txt`
+  );
+  let output = "🤖 Discord Analysis Bot\n------------------------\n";
 
   output += `\n${channelName} Analysis\n`;
-  output += '------------------------\n';
+  output += "------------------------\n";
 
   if (!channelId) {
-    throw new Error('Missing required channel ID');
+    throw new Error("Missing required channel ID");
   }
 
   if (!process.env.DISCORD_BOT_TOKEN) {
-    console.error('Error: DISCORD_BOT_TOKEN is not set in environment variables');
-    console.log('Please set DISCORD_BOT_TOKEN in your .env file');
+    console.error(
+      "Error: DISCORD_BOT_TOKEN is not set in environment variables"
+    );
+    console.log("Please set DISCORD_BOT_TOKEN in your .env file");
     return;
   }
 
-  console.log('Analyzing Discord channel...');
+  console.log("Analyzing Discord channel...");
 
   try {
     // Use date range from March 15th to today
-    const endDate = new Date().toISOString().split('T')[0]; // Today
-    const startDateStr = '2025-03-15';
-    const days = Math.ceil((new Date(endDate).getTime() - new Date(startDateStr).getTime()) / (1000 * 60 * 60 * 24));
+    const endDate = new Date().toISOString().split("T")[0]; // Today
+    const startDateStr = "2025-04-01";
+    const days = Math.ceil(
+      (new Date(endDate).getTime() - new Date(startDateStr).getTime()) /
+        (1000 * 60 * 60 * 24)
+    );
     const dailyAnalyses: { date: string; analysis: any }[] = [];
 
     console.log(`Using date range: ${startDateStr} to ${endDate}`);
@@ -109,7 +117,7 @@ async function runAnalysis(channelName: string, channelId: string) {
     for (let i = 0; i < days; i++) {
       const currentDate = new Date(endDate);
       currentDate.setDate(currentDate.getDate() - i);
-      const dateStr = currentDate.toISOString().split('T')[0];
+      const dateStr = currentDate.toISOString().split("T")[0];
 
       console.log(`\nAnalyzing messages for ${dateStr}...`);
       const dailyAnalysis = await analyzeSingleDay(channelId, dateStr);
@@ -118,13 +126,13 @@ async function runAnalysis(channelName: string, channelId: string) {
         analysis: dailyAnalysis,
       });
       if (i < days - 1) {
-        console.log('Waiting before next analysis...');
+        console.log("Waiting before next analysis...");
         await sleep(5000);
       }
     }
 
     // Add daily analyses section
-    output += '\n📊 Daily Analyses:\n';
+    output += "\n📊 Daily Analyses:\n";
     for (const daily of dailyAnalyses) {
       output += `\n=== ${daily.date} ===\n`;
       output += formatAnalysis(daily.analysis);
@@ -133,14 +141,17 @@ async function runAnalysis(channelName: string, channelId: string) {
     // Write the complete analysis to file
     await writeAnalysisToFile(output, outputFile);
 
-    const combinedOutputFile = path.join('analysis_output', `${channelName}_combined_analysis_${timestamp}.txt`);
-    let combinedOutput = '🤖 Discord Analysis Bot\n------------------------\n';
+    const combinedOutputFile = path.join(
+      "analysis_output",
+      `${channelName}_combined_analysis_${timestamp}.txt`
+    );
+    let combinedOutput = "🤖 Discord Analysis Bot\n------------------------\n";
 
     combinedOutput += `\n${channelName} Analysis\n`;
-    combinedOutput += '------------------------\n';
+    combinedOutput += "------------------------\n";
 
     // Combine all daily analyses
-    console.log('\nCombining daily analyses...');
+    console.log("\nCombining daily analyses...");
     const dailyOutput = output;
     const analysisResponse = await combineAnalyses(dailyOutput);
 
@@ -158,22 +169,22 @@ async function runAnalysis(channelName: string, channelId: string) {
 
 async function writeAnalysisToFile(output: string, filePath: string) {
   try {
-    await fs.writeFile(filePath, output, 'utf8');
+    await fs.writeFile(filePath, output, "utf8");
     console.log(`Analysis written to: ${filePath}`);
   } catch (error) {
-    console.error('Error writing analysis to file:', error);
+    console.error("Error writing analysis to file:", error);
   }
 }
 
 const { categories } = await getCategories();
 
 // Run the analysis
-runAnalysis('Mastra', channels.Mastra).then(() => {
-  console.log('Analysis complete!');
+runAnalysis("Mastra", channels.Mastra).then(() => {
+  console.log("Analysis complete!");
 });
 
-runAnalysis('HelpBugsProblems', channels.HelpBugsProblems).then(() => {
-  console.log('Analysis complete!');
+runAnalysis("HelpBugsProblems", channels.HelpBugsProblems).then(() => {
+  console.log("Analysis complete!");
 });
 
 // Function to analyze a single day

@@ -18,8 +18,9 @@
   "license": "ISC",
   "dependencies": {
     "@ai-sdk/openai": "latest",
-    "@mastra/core": "workspace:*",
-    "@mastra/mcp": "workspace:*",
+    "@mastra/core": "link:../../mastra/packages/core",
+    "@mastra/mcp": "link:../../mastra/packages/mcp",
+    "@mastra/memory": "link:../../mastra/packages/memory",
     "ai": "latest",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.7",

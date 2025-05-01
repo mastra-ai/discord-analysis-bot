@@ -1,12 +1,12 @@
-import { MCPConfiguration } from '@mastra/mcp';
+import { MCPClient } from "@mastra/mcp";
 
-console.log('Initializing MCP config...');
+console.log("Initializing MCP config...");
 
-const mcpConfig = new MCPConfiguration({
+const mcpConfig = new MCPClient({
   servers: {
     mastra: {
-      command: 'npx',
-      args: ['-y', '@mastra/mcp-docs-server@latest'],
+      command: "npx",
+      args: ["-y", "@mastra/mcp-docs-server@latest"],
     },
   },
 });
@@ -15,10 +15,10 @@ let mcpTools: Record<string, any> = {};
 
 try {
   const tools = await mcpConfig.getTools();
-  console.log('MCP tools initialized successfully:', Object.keys(tools));
+  console.log("MCP tools initialized successfully:", Object.keys(tools));
   mcpTools = tools;
 } catch (error) {
-  console.error('Failed to initialize MCP tools:', error);
+  console.error("Failed to initialize MCP tools:", error);
   throw error;
 }
 

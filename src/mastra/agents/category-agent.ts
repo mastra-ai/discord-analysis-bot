@@ -14,7 +14,7 @@ export const CategorySchema = z.object({
 });
 
 export const categoryAgent = new Agent({
-  name: 'Category Definition Agent',
+  name: "Category Definition Agent",
   instructions: `
     You are a specialized agent that defines categories for Discord message analysis based on Mastra's documentation.
     
@@ -40,6 +40,6 @@ export const categoryAgent = new Agent({
     
     Include an "Other" category for messages that don't fit elsewhere.
   `,
-  model: openai('gpt-4o'),
+  model: openai("gpt-4o"),
   tools: mcpTools,
 });

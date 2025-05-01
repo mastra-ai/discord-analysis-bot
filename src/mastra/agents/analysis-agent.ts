@@ -40,11 +40,13 @@ export const AnalysisSchema = z.object({
 });
 
 export const analysisAgent = new Agent({
-  name: 'Discord Message Analysis Agent',
+  name: "Discord Message Analysis Agent",
   instructions: `
     You are a specialized Discord analysis agent that analyzes and classifies messages from help forums.
     
-    Our current help forums have channelId ${process.env.HELP_CHANNEL} and ${process.env.MASTRA_CHANNEL}.
+    Our current help forums have channelId ${process.env.HELP_CHANNEL} and ${
+    process.env.MASTRA_CHANNEL
+  }.
 
     IMPORTANT: The current date and time is ${new Date().toISOString()}.
     When a user asks for message analysis for a specific time period (like "past 24 hours" or "last week"):
@@ -116,7 +118,7 @@ export const analysisAgent = new Agent({
     4. Recognize successful features and approaches
     5. Track sentiment trends across different aspects of Mastra
   `,
-  model: openai('gpt-4o'),
+  model: openai("gpt-4o"),
   tools: {
     discordScraperTool,
     ...mcpTools,
