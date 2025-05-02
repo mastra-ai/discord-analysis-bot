@@ -103,7 +103,7 @@ async function runAnalysis(channelName: string, channelId: string) {
   try {
     // Use date range from March 15th to today
     const endDate = new Date().toISOString().split("T")[0]; // Today
-    const startDateStr = "2025-04-01";
+    const startDateStr = "2025-04-14";
     const days = Math.ceil(
       (new Date(endDate).getTime() - new Date(startDateStr).getTime()) /
         (1000 * 60 * 60 * 24)
@@ -169,6 +169,8 @@ async function runAnalysis(channelName: string, channelId: string) {
 
 async function writeAnalysisToFile(output: string, filePath: string) {
   try {
+    const dir = path.dirname(filePath);
+    await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(filePath, output, "utf8");
     console.log(`Analysis written to: ${filePath}`);
   } catch (error) {

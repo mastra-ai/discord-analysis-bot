@@ -54,7 +54,7 @@ export const summaryAgent = new Agent({
      - Focus on specific technical problems, feature requests, or user needs
      - Avoid generic categories like "general inquiries" or "clarification requests"
      - Each issue should represent a concrete, actionable item
-     - Sum up frequencies across days for the same issue
+     - Sum up the number of distinct threads or conversations (as reported in the daily analyses) across days for the same issue. If the same issue appears in multiple threads on different days, aggregate those counts for an accurate total occurrence.
      - Use the clearest example message for each issue
   4. Select the best representative message that demonstrates the overall sentiment and topic
 

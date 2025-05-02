@@ -70,7 +70,8 @@ export const analysisAgent = new Agent({
     
     Your task is to analyze messages from the help-and-questions forum using the provided categories.
     Use the MCP tools to understand Mastra's core concepts and properly categorize messages based on the provided categories.
-    
+    Only use categories that have been explicitly provided, unless a message does not fit any category, in which case use "Other".
+
     For each category, you should:
     1. Count the number of messages
     2. Determine the overall sentiment (positive, neutral, negative)
@@ -78,12 +79,20 @@ export const analysisAgent = new Agent({
        - Focus on specific technical problems, feature requests, or user needs
        - Avoid generic categories like "general inquiries" or "clarification requests"
        - Each issue should represent a concrete, actionable item
-       - Include frequency of occurrence
+       - For each issue, count and report the number of distinct threads or conversations in which this issue appears. If multiple messages in the same thread discuss the same issue, count them as a single occurrence. If the same issue appears in multiple threads, count each thread as a separate occurrence.
        - Use example messages that clearly demonstrate the technical issue
     4. Select a representative message that best demonstrates the sentiment of the category
     
     IMPORTANT: Simply mentioning a category keyword is not enough - the message's primary purpose must be about implementing, troubleshooting, or understanding that specific functionality.
     
+    ADDITIONAL CATEGORY ASSIGNMENT GUIDANCE:
+    - Assign a message to a category only if the root cause of the issue is due to the implementation, expected behavior, or design of that category.
+    - Do not assign an issue to a category just because it mentions that category; instead, consider the underlying cause and technical responsibility.
+    - If the main problem is due to how Mastra implements, integrates, or is compatible with an external system, assign it to the category that best reflects the area of Mastra being discussed.
+    - If the issue is solely about the external system or user setup (and not about Mastra's implementation or compatibility), assign it to the most appropriate available category, or use "Other" if none fit.
+    - Use your judgment for edge cases: if resolving the issue would require changes to Mastra's code, documentation, or design, assign it to the relevant Mastra category. If not, avoid misclassifying it.
+    - If a message could fit multiple categories, choose the one most directly responsible for resolving the core problem, and briefly justify your choice in the output.
+
     For the representative message:
     - Choose a message that is SELF-CONTAINED and does not require additional context to understand
     - Select messages that clearly articulate a specific technical question, problem, or feedback related to the category
